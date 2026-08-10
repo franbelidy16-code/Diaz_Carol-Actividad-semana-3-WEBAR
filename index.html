@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AirPods Pro 3 | Experiencia WebAR</title>
+
+  <script type="module"
+    src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.1.0/model-viewer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --negro: #111111;
+      --blanco: #ffffff;
+      --gris: #f5f7fa;
+      --azul: #1677ff;
+      --azul-suave: #eaf3ff;
+      --texto-secundario: #5f6368;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--blanco);
+      color: var(--negro);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--negro);
+      color: var(--blanco);
+      padding: 22px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 1.9rem;
+      letter-spacing: 4px;
+    }
+
+    header p {
+      margin-top: 4px;
+      color: #d9d9d9;
+    }
+
+    main {
+      width: min(1120px, 92%);
+      margin: 42px auto;
+    }
+
+    .producto {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .visor {
+      min-height: 520px;
+      background: var(--gris);
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    model-viewer {
+      width: 100%;
+      height: 520px;
+      background: var(--gris);
+    }
+
+    .ar-button {
+      position: absolute;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      border: none;
+      border-radius: 30px;
+      padding: 14px 24px;
+      background: var(--azul);
+      color: var(--blanco);
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(22,119,255,.25);
+    }
+
+    .informacion {
+      padding: 10px 0;
+    }
+
+    .etiqueta {
+      display: inline-block;
+      background: var(--azul-suave);
+      color: var(--azul);
+      padding: 7px 13px;
+      border-radius: 20px;
+      font-size: .85rem;
+      font-weight: bold;
+      margin-bottom: 14px;
+    }
+
+    .informacion h2 {
+      font-size: 2.7rem;
+      line-height: 1.15;
+      margin-bottom: 15px;
+    }
+
+    .descripcion {
+      font-size: 1.08rem;
+      color: var(--texto-secundario);
+      margin-bottom: 20px;
+    }
+
+    .beneficios {
+      margin: 20px 0 25px;
+      padding-left: 22px;
+    }
+
+    .beneficios li {
+      margin-bottom: 8px;
+    }
+
+    .precio-anterior {
+      color: #777;
+      text-decoration: line-through;
+      font-size: 1.05rem;
+    }
+
+    .precio-actual {
+      color: var(--azul);
+      font-size: 2.15rem;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .ahorro {
+      display: inline-block;
+      color: #16753b;
+      background: #e9f8ef;
+      border-radius: 18px;
+      padding: 5px 11px;
+      font-size: .9rem;
+      font-weight: bold;
+      margin-bottom: 22px;
+    }
+
+    .frase {
+      font-size: 1.15rem;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    .cta {
+      display: inline-block;
+      background: var(--azul);
+      color: var(--blanco);
+      padding: 15px 29px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform .2s ease, opacity .2s ease;
+      box-shadow: 0 8px 20px rgba(22,119,255,.22);
+    }
+
+    .cta:hover {
+      opacity: .9;
+      transform: translateY(-2px);
+    }
+
+    .qr-section {
+      margin-top: 52px;
+      padding: 34px 25px;
+      background: var(--azul-suave);
+      border-radius: 24px;
+      text-align: center;
+    }
+
+    .qr-section h2 {
+      margin-bottom: 8px;
+    }
+
+    .qr-section p {
+      color: var(--texto-secundario);
+      max-width: 650px;
+      margin: auto;
+    }
+
+    #qrCode {
+      display: flex;
+      justify-content: center;
+      margin: 22px auto 5px;
+    }
+
+    footer {
+      margin-top: 45px;
+      padding: 25px;
+      background: var(--negro);
+      color: var(--blanco);
+      text-align: center;
+    }
+
+    @media (max-width: 800px) {
+      .producto {
+        grid-template-columns: 1fr;
+      }
+
+      .visor, model-viewer {
+        min-height: 400px;
+        height: 400px;
+      }
+
+      .informacion h2 {
+        font-size: 2.1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>MAC CENTER</h1>
+    <p>Descubre los AirPods Pro 3 en realidad aumentada</p>
+  </header>
+
+  <main>
+    <section class="producto">
+      <div class="visor">
+        <model-viewer
+          src="modelo.glb"
+          alt="Modelo tridimensional de los AirPods Pro 3"
+          ar
+          ar-modes="webxr scene-viewer quick-look"
+          ar-placement="floor"
+          ar-scale="auto"
+          camera-controls
+          auto-rotate
+          shadow-intensity="1.2"
+          exposure="1"
+          touch-action="pan-y">
+
+          <button class="ar-button" slot="ar-button" type="button">
+            Ver en mi espacio
+          </button>
+        </model-viewer>
+      </div>
+
+      <div class="informacion">
+        <span class="etiqueta">OFERTA ESPECIAL</span>
+        <h2>AirPods Pro 3</h2>
+
+        <p class="descripcion">
+          Audífonos inalámbricos con sonido inmersivo y diseño compacto.
+        </p>
+
+        <ul class="beneficios">
+          <li>Sonido inmersivo.</li>
+          <li>Diseño compacto y moderno.</li>
+          <li>Una experiencia pensada para el público general.</li>
+        </ul>
+
+        <p class="precio-anterior">Antes: $1.279.000 COP</p>
+        <p class="precio-actual">Ahora: $999.000 COP</p>
+        <span class="ahorro">¡Ahorras $280.000 COP!</span>
+
+        <p class="frase">✨ Renueva tu experiencia de audio y llévatelos a un precio especial.</p>
+
+        <a
+          class="cta"
+          href="https://mac-center.com/products/airpods-pro-3-mfhp4am-a"
+          target="_blank"
+          rel="noopener noreferrer">
+          🔥 ¡Quiero mis AirPods Pro 3!
+        </a>
+      </div>
+    </section>
+
+    <section class="qr-section">
+      <h2>Explora los AirPods Pro 3 desde tu celular</h2>
+      <p>
+        Escanea el código QR para abrir la experiencia y usar la realidad
+        aumentada desde un dispositivo compatible.
+      </p>
+      <div id="qrCode"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Mac Center · Experiencia comercial WebAR</p>
+  </footer>
+
+  <script>
+    new QRCode(document.querySelector("#qrCode"), {
+      text: window.location.href,
+      width: 180,
+      height: 180,
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  </script>
+</body>
+</html>
